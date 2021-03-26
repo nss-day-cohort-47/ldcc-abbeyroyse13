@@ -1,5 +1,5 @@
 export const SnackDetails = (snackObject) => {
-	return `
+    return `
 	<div class="col">
 		<div class="card shadow-sm" >
             <img class="bd-placeholder-img card-img-top"  style="max-width: 540px;" aria-label="Placeholder:${snackObject.name}" preserveAspectRatio="xMidYMid slice" focusable="false" src="${snackObject.snackImg}" alt="${snackObject.name}">
@@ -9,10 +9,10 @@ export const SnackDetails = (snackObject) => {
 				 
 				  <div class="container">
 					<div class="row row-cols-2">
-						<div class="col col-details">Type: ${snackObject.typeId}</div>
-						<div class="col col-details">Shape: ${snackObject.shapeId}</div>
-						<div class="col col-details">Flavor: ${snackObject.inFlavorId}</div>
-						<div class="col col-details">Season: ${snackObject.seasonId}</div>
+						<div class="col col-details">Type: ${snackObject.types.name}</div>
+						<div class="col col-details">Shape: ${snackObject.shapes.name}</div>
+						<div class="col col-details">Flavor: ${snackObject.inFlavors.name}</div>
+						<div class="col col-details">Season: ${snackObject.seasons.name}</div>
 					</div>
 					<div class="row row-cols-1">
 						<div class="col col-details">${snackObject.toppings}</div>

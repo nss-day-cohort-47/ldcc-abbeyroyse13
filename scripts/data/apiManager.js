@@ -4,45 +4,45 @@ const apiURL = "http://localhost:8088";
 let loggedInUser = {}
 
 export const getLoggedInUser = () => {
-	return { ...loggedInUser };
+    return {...loggedInUser };
 }
 
 export const logoutUser = () => {
-	loggedInUser = {}
+    loggedInUser = {}
 }
 
 export const setLoggedInUser = (userObj) => {
-	loggedInUser = userObj;
+    loggedInUser = userObj;
 }
 
 export const loginUser = (userObj) => {
-	return fetch(`${apiURL}/users?name=${userObj.name}&email=${userObj.email}`)
-		.then(response => response.json())
-		.then(parsedUser => {
-			//is there a user?
-			if (parsedUser.length > 0) {
-				setLoggedInUser(parsedUser[0]);
-				return getLoggedInUser();
-			} else {
-				//no user
-				return false;
-			}
-		})
+    return fetch(`${apiURL}/users?name=${userObj.name}&email=${userObj.email}`)
+        .then(response => response.json())
+        .then(parsedUser => {
+            //is there a user?
+            if (parsedUser.length > 0) {
+                setLoggedInUser(parsedUser[0]);
+                return getLoggedInUser();
+            } else {
+                //no user
+                return false;
+            }
+        })
 }
 
 export const registerUser = (userObj) => {
-	return fetch(`${apiURL}/users`, {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json"
-		},
-		body: JSON.stringify(userObj)
-	})
-		.then(response => response.json())
-		.then(parsedUser => {
-			setLoggedInUser(parsedUser);
-			return getLoggedInUser();
-		})
+    return fetch(`${apiURL}/users`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(userObj)
+        })
+        .then(response => response.json())
+        .then(parsedUser => {
+            setLoggedInUser(parsedUser);
+            return getLoggedInUser();
+        })
 }
 
 
@@ -51,23 +51,23 @@ export const registerUser = (userObj) => {
 let snackCollection = [];
 
 export const useSnackCollection = () => {
-  //Best practice: we don't want to alter the original state, so
-  //make a copy of it and then return it
-  //the spread operator makes quick work
-  const snackCollectionCopy = [...snackCollection]
-  return snackCollectionCopy;
+    //Best practice: we don't want to alter the original state, so
+    //make a copy of it and then return it
+    //the spread operator makes quick work
+    const snackCollectionCopy = [...snackCollection]
+    return snackCollectionCopy;
 }
 
 export const getSnacks = () => {
-	return fetch(`${apiURL}/snacks`)
-		.then(response => response.json())
-		.then(parsedResponse => {
-			snackCollection = parsedResponse
-			return parsedResponse;
-		})
+    return fetch(`${apiURL}/snacks`)
+        .then(response => response.json())
+        .then(parsedResponse => {
+            snackCollection = parsedResponse
+            return parsedResponse;
+        })
 }
 
 export const getSingleSnack = (snackId) => {
-	return fetch(`${apiURL}/snacks/${snackId}`)
-	.then(response => response.json())
+    return fetch(`${apiURL}/snacks/${snackId}/?_expand=types/&_expand=inFlavors/&_expand=seasons/&_expand=shapes`)
+        .then(response => response.json())
 }
