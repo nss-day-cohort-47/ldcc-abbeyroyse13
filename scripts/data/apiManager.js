@@ -33,6 +33,7 @@ export const loginUser = (userObj) => {
 export const registerUser = (userObj) => {
     return fetch(`${apiURL}/users`, {
             method: "POST",
+            // isAdmin: false,
             headers: {
                 "Content-Type": "application/json"
             },
