@@ -1,9 +1,17 @@
-import { getLoggedInUser } from "../data/apiManager.js"
+import { getLoggedInUser, useSnackToppings } from "../data/apiManager.js"
 
-export const NavBar = () => {
-	//only show navItems and addTypeButton if user is logged in
-	
-	const navItems = getLoggedInUser().id ? `
+const createMenu = (menu) => {
+    let menuArray = menu.map(menuItem => {
+        return `<option value="${menuItem.id}">${menuItem.name}</option>`
+    }).join("")
+    return menuArray;
+}
+
+export const NavBar = (menu) => {
+    //only show navItems and addTypeButton if user is logged in
+
+    const navItems = getLoggedInUser().id 
+	? `
 	<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 		<span class="navbar-toggler-icon"></span>
 	</button>
@@ -15,18 +23,18 @@ export const NavBar = () => {
 		<li class="nav-item ms-1">
 			<select class="form-select form-select btn-info" aria-label="Select A Topping">
 				<option selected>Select A Topping</option>
-				<option value="1">One</option>
-				<option value="2">Two</option>
-				<option value="3">Three</option>
+				${createMenu(menu)}
 			</select>
 		</li>
 		<li class="nav-item ms-1">
 			<button class="btn btn-info" type="button" id="logout">Logout</button>
 		</li>
 	</ul>
-	</div>` : ""
+	</div>` 
+	: ""
 
-	const addTypeButton = getLoggedInUser().id ? `
+    const addTypeButton = getLoggedInUser().id 
+	? `
 	<nav class="navbar navbar-light"">
 		<div class="container-fluid">
 			<button class="btn btn-outline-primary" type="button">Add A Type</button>
@@ -34,7 +42,7 @@ export const NavBar = () => {
 		</div>
 	</nav>` : ""
 
-	return `
+    return `
 	<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   		<div class="container-fluid">
 		  <span class="navbar-brand mb-0 h1">LDCC
@@ -46,3 +54,10 @@ export const NavBar = () => {
 	${addTypeButton}
 	`
 }
+
+/*const createMenu = (menu) => {
+    let menuArray = menu.map(menuItem => {
+        return `<option value="item">${menuItem.name}</option>`
+    })
+    return menuArray;
+}*/

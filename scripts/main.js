@@ -13,7 +13,10 @@ import {
     registerUser,
     getLoggedInUser,
     getSnacks,
-    getSingleSnack
+    getSingleSnack,
+    getSnackToppings,
+    getToppings,
+    useSnackToppings
 } from "./data/apiManager.js";
 
 
@@ -26,7 +29,7 @@ applicationElement.addEventListener("click", event => {
         //collect all the details into an object
         const userObject = {
             name: document.querySelector("input[name='name']").value,
-            email: document.querySelector("input[name='email']").value
+            email: document.querySelector("input[name='email']").value,
         }
         loginUser(userObject)
             .then(dbUserObj => {
@@ -43,7 +46,8 @@ applicationElement.addEventListener("click", event => {
         //collect all the details into an object
         const userObject = {
             name: document.querySelector("input[name='registerName']").value,
-            email: document.querySelector("input[name='registerEmail']").value
+            email: document.querySelector("input[name='registerEmail']").value,
+            isAdmin: false
         }
         registerUser(userObject)
             .then(dbUserObj => {
@@ -69,8 +73,11 @@ applicationElement.addEventListener("click", event => {
     if (event.target.id.startsWith("detailscake")) {
         const snackId = event.target.id.split("__")[1];
         getSingleSnack(snackId)
-            .then(response => {
-                showDetails(response);
+            .then(snackObject => {
+                getSnackToppings(snackId)
+                    .then(toppingsArray => {
+                        showDetails(snackObject, toppingsArray);
+                    })
             })
     }
 })
@@ -82,9 +89,9 @@ applicationElement.addEventListener("click", event => {
     }
 })
 
-const showDetails = (snackObj) => {
+const showDetails = (snackObj, toppingsArray) => {
         const listElement = document.querySelector("#mainContent");
-        listElement.innerHTML = SnackDetails(snackObj);
+        listElement.innerHTML = SnackDetails(snackObj, toppingsArray);
     }
     //end snack listeners
 
@@ -105,8 +112,8 @@ const showLoginRegister = () => {
     applicationElement.innerHTML += `${LoginForm()} <hr/> <hr/> ${RegisterForm()}`;
 }
 
-const showNavBar = () => {
-    applicationElement.innerHTML += NavBar();
+const showNavBar = (menu) => {
+    applicationElement.innerHTML += NavBar(menu);
 }
 
 const showSnackList = () => {
@@ -121,12 +128,15 @@ const showFooter = () => {
 }
 
 const startLDSnacks = () => {
-    applicationElement.innerHTML = "";
-    showNavBar();
-    applicationElement.innerHTML += `<div id="mainContent"></div>`;
-    showSnackList();
-    showFooter();
-
+    getToppings().then(() => {
+        const menu = useSnackToppings()
+        applicationElement.innerHTML = "";
+        showNavBar(menu);
+        applicationElement.innerHTML += `<div id="mainContent"></div>`;
+        showSnackList();
+        showFooter();
+    })
+   // console.log(useSnackToppings())
 }
 
 checkForUser();
