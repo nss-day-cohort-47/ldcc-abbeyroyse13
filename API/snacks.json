@@ -425,13 +425,20 @@
     "users": [{
             "name": "LD",
             "email": "ld@ldcc.com",
-            "IsAdmin": true,
+            "isAdmin": true,
             "id": 1
         },
         {
             "name": "abbey",
             "email": "abbey@ar.com",
+            "isAdmin": false,
             "id": 2
+        },
+        {
+            "name": "evan",
+            "email": "evan@em.com",
+            "isAdmin": false,
+            "id": 3
         }
     ]
 }

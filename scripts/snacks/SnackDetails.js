@@ -1,4 +1,10 @@
-export const SnackDetails = (snackObject) => {
+export const SnackDetails = (snackObject, toppingsArray) => {
+
+    /*let toppingsHTML = "";
+    for (const toppingObject of toppingsArray) {
+        toppingsHTML += `${toppingObject.topping.name} , `
+    }*/
+
     return `
 	<div class="col">
 		<div class="card shadow-sm" >
